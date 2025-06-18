@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pardosi Store - Metode Pembayaran</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href=styles.css>
+  <style disabled>
+    body {
+      margin: 0;
+      font-family: 'Outfit', sans-serif;
+      background: linear-gradient(135deg, #1c1c1c, #2c2c54);
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      padding: 40px 0 20px;
+      font-size: 2.5rem;
+      color: #ffd700;
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+
+    .description {
+      text-align: justify;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #ddd;
+      margin-bottom: 40px;
+    }
+
+    .payment-methods {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .method {
+      background: #1f1f1f;
+      padding: 20px;
+      border-radius: 20px;
+      width: 260px;
+      text-align: center;
+      transition: transform 0.3s ease;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    }
+
+    .method:hover {
+      transform: translateY(-5px);
+    }
+
+    .method h2 {
+      color: #ffd700;
+      margin-bottom: 10px;
+    }
+
+    .method p {
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+    }
+
+    .method button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .method button:hover {
+      background-color: #0056b3;
+    }
+    
+    .method.center-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#gopay {
+  text-align: center;
+}
+
+    .qris-img {
+      width: 180px;
+      border-radius: 10px;
+    }
+
+    .note {
+      margin-top: 20px;
+      text-align: center;
+      font-weight: bold;
+      color: #ff4d4d;
+    }
+
+    .footer {
+      background-color: #0d0d0d;
+      margin-top: 60px;
+      padding: 40px 20px;
+      border-radius: 20px 20px 0 0;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 30px;
+      text-align: left;
+    }
+
+    .column {
+      flex: 1 1 250px;
+    }
+
+    .column h3 {
+      color: #ffd700;
+      border-bottom: 2px solid #666;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+    }
+
+    .column p, .column ul li {
+      color: #ccc;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .column ul {
+      padding-left: 20px;
+    }
+
+    .column ul li {
+      list-style-type: disc;
+    }
+
+    footer p.copyright {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 0.85rem;
+      color: #777;
+    }
+    
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s, bottom 0.3s;
+      font-size: 0.95rem;
+    }
+    
+    .toast.show {
+      opacity: 1;
+      bottom: 30px;
+    }
+    
+    /* Container untuk gambar QRIS */
+.qris-container {
+  position: relative;
+  display: inline-block;
+  margin: 10px auto;
+}
+
+/* Gambar QRIS */
+.qris-img {
+  width: 180px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border: 2px solid transparent;
+}
+
+/* Efek saat hover gambar QRIS */
+.qris-img:hover {
+  transform: scale(1.05) rotate(2deg);
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+  border-color: #ffd700;
+}
+
+/* Teks di bawah gambar yang muncul saat hover */
+.scan-text {
+  position: absolute;
+  bottom: -25px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #ffd700;
+  font-size: 0.9rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Munculkan teks saat container dihover */
+.qris-container:hover .scan-text {
+  opacity: 1;
+}
+
+/* Modal untuk QRIS */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.92);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.modal.show {
+  display: flex;
+  opacity: 1;
+}
+
+.modal-content {
+  max-width: 85%;
+  max-height: 85%;
+  border-radius: 12px;
+  box-shadow: 0 0 35px rgba(255, 215, 0, 0.7);
+  border: 3px solid #ffd700;
+  animation: pop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes pop-in {
+  0% {
+    transform: scale(0.7) rotate(5deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
+}
+
+.close {
+  position: absolute;
+  top: 25px;
+  right: 35px;
+  color: #fff;
+  font-size: 45px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.close:hover {
+  color: #ffd700;
+  transform: scale(1.2);
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">Payment Pardosi Store</header>
+    <section class="description">
+      <p>Pardosi Store adalah penyedia layanan produk hosting terbaik, akun digital, dan layanan script bot berkualitas tinggi. Kami berkomitmen untuk memberikan harga terjangkau dengan jaminan kualitas dan kepuasan pelanggan sebagai prioritas utama. Tersedia layanan VPS, Panel Hosting, Domain, serta berbagai tool digital yang mendukung kebutuhan Anda.</p>
+    </section>
+
+    <section class="payment-methods">
+      <div class="method">
+        <h2><i class="fab fa-d-and-d"></i> DANA</h2>
+        <p id="dana">081775279076</p>
+        <button onclick="copy('dana', 'DANA')">Salin Nomor</button>
+      </div>
+      <div class="method">
+        <h2><i class="fas fa-wallet"></i> OVO</h2>
+        <p id="ovo">belum tersedia</p>
+        <button onclick="copy('ovo', 'OVO')">Salin Nomor</button>
+      </div>
+      <div class="method center-content">
+  <h2><i class="fab fa-google-wallet"></i> GOPAY</h2>
+  <p id="gopay">belum tersedia</p>
+  <button onclick="copy('gopay', 'GOPAY')">Salin Nomor</button>
+</div>
+      <div class="method">
+  <h2><i class="fas fa-qrcode"></i> QRIS</h2>
+  <div class="qris-container">
+    <img src="image/qris.jpg" alt="QRIS Pardosi Store" class="qris-img" onclick="openModal()">
+    <div class="scan-text">Klik untuk memperbesar</div>
+  </div>
+</div>
+    </section>
+
+    <p class="note">NOTE: WAJIB SERTAKAN BUKTI TRANSFER</p>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="column">
+          <h3>Tentang Kami</h3>
+          <p>Pardosi Store adalah penyedia layanan hosting, domain, panel, dan tools digital dengan jaminan garansi dan kualitas premium.</p>
+        </div>
+        <div class="column">
+          <h3>Produk Kami</h3>
+          <ul>
+            <li>VPS Digital</li>
+            <li>Akun Digital</li>
+            <li>Script Bot WhatsApp</li>
+            <li>Panel Hosting & Pterodactyl</li>
+          </ul>
+        </div>
+        <div class="column">
+          <h3>Kontak Kami</h3>
+          <p>WhatsApp: +62 822-7496-5592</p>
+          <p>Email: pardosiagape@gmail.com</p>
+          <p>Instagram: @pardosi_store</p>
+        </div>
+      </div>
+      <p class="copyright">&copy; 2025 Pardosi Store. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <!-- Toast notification element -->
+  <div id="toast" class="toast">Nomor berhasil disalin!</div>
+  
+  <!-- Modal untuk QRIS -->
+<div id="qrisModal" class="modal" onclick="closeModal()">
+  <span class="close" onclick="closeModal()">&times;</span>
+  <img class="modal-content" id="modalImg">
+</div>
+
+  <script>
+    function copy(id, provider) {
+      const text = document.getElementById(id).innerText;
+      
+      // Skip if "belum tersedia"
+      if(text.toLowerCase().includes("belum tersedia")) {
+        showToast('Nomor belum tersedia!');
+        return;
+      }
+      
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Nomor ' + provider + ' berhasil disalin!');
+      }).catch(err => {
+        showToast('Gagal menyalin: ' + err);
+      });
+    }
+    
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+    
+    // Fungsi untuk membuka modal QRIS
+function openModal() {
+  const modal = document.getElementById('qrisModal');
+  const modalImg = document.getElementById('modalImg');
+  
+  // Set gambar ke modal
+  modalImg.src = 'image/qris.jpg';
+  modalImg.alt = 'QRIS Pardosi Store';
+  
+  // Tampilkan modal
+  modal.classList.add('show');
+  
+  // Blokir scroll background
+  document.body.style.overflow = 'hidden';
+}
+
+// Fungsi untuk menutup modal QRIS
+function closeModal() {
+  const modal = document.getElementById('qrisModal');
+  modal.classList.remove('show');
+  
+  // Kembalikan scroll background
+  document.body.style.overflow = 'auto';
+}
+
+// Event listener untuk menutup modal saat klik di luar gambar
+document.getElementById('qrisModal').addEventListener('click', function(e) {
+  if (e.target === this || e.target.classList.contains('close')) {
+    closeModal();
+  }
+});
+
+// Event listener untuk menutup modal dengan tombol ESC
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeModal();
+  }
+});
+  </script>
+</body>
+</html>

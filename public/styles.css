@@ -1,0 +1,219 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap');
+
+:root {
+  --primary-color: #ffd700;
+  --bg-gradient: linear-gradient(135deg, #0f0f0f, #1f1f3b);
+  --accent-color: #007bff;
+  --accent-hover: #0056b3;
+  --text-light: #ccc;
+  --text-faded: #777;
+  --glow: rgba(255, 215, 0, 0.2);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg-gradient);
+  color: white;
+  overflow-x: hidden;
+  min-height: 100vh;
+  animation: fadeInBody 1s ease-in-out;
+}
+
+@keyframes fadeInBody {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+  padding: 50px 0 20px;
+  font-size: 2.8rem;
+  color: var(--primary-color);
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-shadow: 0 0 20px var(--primary-color);
+  animation: fadeInDown 1.2s ease forwards;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.description {
+  text-align: justify;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-light);
+  margin-bottom: 40px;
+  padding: 0 10px;
+  animation: fadeInUp 1.3s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.payment-methods {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  animation: zoomIn 1.4s ease;
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.method {
+  background: #1f1f1f;
+  padding: 25px;
+  border-radius: 20px;
+  width: 270px;
+  text-align: center;
+  transition: all 0.4s ease;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.06);
+  position: relative;
+  overflow: hidden;
+  transform: perspective(600px) rotateX(0deg);
+}
+
+.method::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+  animation: rotate 8s linear infinite;
+  z-index: 0;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0); }
+  to { transform: rotate(360deg); }
+}
+
+.method * {
+  position: relative;
+  z-index: 1;
+}
+
+.method:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+}
+
+.method h2 {
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  transition: color 0.3s;
+}
+
+.method p {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  color: white;
+}
+
+.method button {
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+.method button:hover {
+  background-color: var(--accent-hover);
+  transform: scale(1.08);
+  box-shadow: 0 4px 25px rgba(0, 123, 255, 0.6);
+}
+
+.qris-img {
+  width: 200px;
+  border-radius: 10px;
+  margin-top: 10px;
+  transition: transform 0.3s ease;
+}
+
+.qris-img:hover {
+  transform: scale(1.05);
+}
+
+.note {
+  margin-top: 30px;
+  text-align: center;
+  font-weight: bold;
+  color: #ff4d4d;
+  animation: fadeInUp 1.5s ease;
+}
+
+.footer {
+  background-color: #0d0d0d;
+  margin-top: 60px;
+  padding: 40px 20px;
+  border-radius: 20px 20px 0 0;
+  animation: fadeInUp 1.6s ease;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 30px;
+  text-align: left;
+}
+
+.column {
+  flex: 1 1 250px;
+}
+
+.column h3 {
+  color: var(--primary-color);
+  border-bottom: 2px solid #666;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+}
+
+.column p, .column ul li {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.column ul {
+  padding-left: 20px;
+}
+
+.column ul li {
+  list-style-type: disc;
+}
+
+footer p.copyright {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 0.85rem;
+  color: var(--text-faded);
+}
